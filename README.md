@@ -217,6 +217,7 @@ Submit your completed `index.js` with all functions implemented and passing the 
 - [MDN FileReader API](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
 - [MDN TypedArray Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
 - [BMP File Format Specification](https://en.wikipedia.org/wiki/BMP_file_format)
+- [BMP File Structure In Detail](BMP-STRUCTURE.md)
 
 ## 🎓 Learning Objectives
 
