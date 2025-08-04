@@ -40,7 +40,7 @@ Welcome to the BMP Parser Starter Project! This project provides a skeleton for 
    - Open the browser's Developer Tools (F12) to view console output
 
 4. **Test Your Implementation**
-   - Use the provided `test.js` to validate your `readLE` functions
+   - Use the provided `test.js` to validate your `readLE` functions (Ticket 2)
    - Check the console for test results and debugging information
 
 ## 📁 Project Structure
