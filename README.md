@@ -13,48 +13,45 @@ Welcome to the BMP Endian Challenge! This project teaches you how to parse and r
 
 ### Prerequisites
 - A modern web browser (Chrome, Firefox, Safari, Edge)
+- Basic understanding of JavaScript (variables, functions, loops)
 - A local web server (to avoid CORS issues with file loading)
 
 ### Setup Instructions
 
-1. **Clone the Repository**
-   ```bash
-   git clone <repository-url>
-   cd bmp-endian-challenge
-   ```
+1. **Download the Project**
+   - Download and extract the project files to a folder on your computer
 
 2. **Start a Local Server**
    
-   **Using Node.js**
+   **Using Node.js (Recommended)**
    ```bash
+   # Install Node.js from https://nodejs.org/ if you haven't already
+   
    # Install a simple HTTP server globally
    npm install -g http-server
+   
+   # Navigate to your project folder
+   cd bmp-endian-challenge
    
    # Start the server
    http-server -p 8000
    ```
 
-   **Using Python**
-   ```bash
-   # Python 3
-   python -m http.server 8000
-   
-   # Python 2
-   python -m SimpleHTTPServer 8000
-   ```
+   **Using VS Code Live Server Extension**
+   - Install the "Live Server" extension in VS Code
+   - Right-click on `index.html` and select "Open with Live Server"
 
-   **Using PHP**
-   ```bash
-   php -S localhost:8000
-   ```
+   **Using any other local server**
+   - Any method that serves files over HTTP will work
 
 3. **Open in Browser**
-   - Navigate to `http://localhost:8000`
+   - Navigate to `http://localhost:8000` (or whatever port your server uses)
    - Open the browser's Developer Tools (F12) to view console output
 
-4. **Test Your Implementation**
-   - Use the provided `test.js` to validate your functions
-   - Check the console for test results and debugging information
+4. **Enable Testing**
+   - Open `index.js` in your code editor
+   - Change `CURRENT_TICKET = 0` to `CURRENT_TICKET = 1` to start testing
+   - Refresh the page to see test results
 
 ## 📁 Project Structure
 
@@ -62,7 +59,6 @@ Welcome to the BMP Endian Challenge! This project teaches you how to parse and r
 bmp-endian-challenge/
 ├── index.html          # Main HTML template with file input and canvas
 ├── index.js            # JavaScript file with placeholders for implementations
-├── test.js             # Comprehensive test suite for all functions
 ├── README.md           # This file - project overview and setup
 ├── BMP-STRUCTURE.md    # Detailed BMP file format documentation
 ├── ENDIANNESS.md       # Endianness explanation and examples
@@ -109,7 +105,7 @@ When you set `CURRENT_TICKET = 6`, you should see:
 ==================================================
 
 === Testing Ticket 1: Random Colors Rendering ===
-✅ Ticket 1: PASSED (function executed without error)
+✅ Ticket 1: PASSED (random colors rendered to canvas)
 
 === Testing Ticket 2: readLE Functions ===
 ✅ readUInt32LE: PASSED
@@ -127,29 +123,21 @@ When you set `CURRENT_TICKET = 6`, you should see:
 ✅ RGB Extraction: PASSED
    Extracted RGB values: [[255, 0, 0], [0, 0, 255], [0, 255, 0], [255, 255, 255]]
 
-=== Testing Ticket 6: RGB Rendering to Canvas ===
-✅ RGB Rendering: PASSED (function executed without error)
-
 ==================================================
 🎯 Tests complete for tickets 1-6
-💡 Change CURRENT_TICKET to test more tickets as you complete them!
+💡 Upload a BMP file to test Ticket 6 (complete workflow)
 ```
 
-### Test Details
+### Special Ticket 6 Testing
 
-- **Ticket 1**: Tests that `renderRandomColors()` executes without errors
-- **Ticket 2**: Tests bitwise operations for reading little-endian integers
-- **Ticket 3**: Tests BMP header parsing with mock data
-- **Ticket 4**: Tests BMP info header parsing with mock data
-- **Ticket 5**: Tests RGB extraction and BMP row order handling
-- **Ticket 6**: Tests RGB rendering to canvas
+Ticket 6 is special - it only runs when you actually upload a BMP file:
 
-### Manual Testing (Optional)
+1. **Complete tickets 1-5 first**
+2. **Set `CURRENT_TICKET = 6`**
+3. **Upload a BMP file** using the file input
+4. **Check the console** for Ticket 6 test results
 
-You can also manually test by:
-- Uploading BMP files to see the complete workflow
-- Checking console logs for header information
-- Verifying that images display correctly on the canvas
+This tests the complete end-to-end workflow with real file data!
 
 ## 🎯 Tickets to Complete
 
@@ -160,7 +148,7 @@ You can also manually test by:
 
 ### [Ticket 2: Implement readLE Functions](tickets/ticket-2.md)
 - **Description**: Implement `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions for parsing little-endian integers.
-- **Acceptance Criteria**: Pass all tests in `test.js` for bitwise operations.
+- **Acceptance Criteria**: Pass all tests in the auto-running test system.
 - **File**: `index.js` - Look for the `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions.
 
 ### [Ticket 3: Implement BMP Loading and BITMAPFILEHEADER Logging](tickets/ticket-3.md)
@@ -190,21 +178,29 @@ You can also manually test by:
 2. **Complete Ticket 2** - Master bitwise operations for endianness
 3. **Work through Tickets 3-6** - Build the BMP parsing pipeline
 
-### Key Concepts
+### Key Concepts for Beginners
 - **Canvas API**: Use `createImageData` and `putImageData` for rendering
 - **BMP Format**: Handle bottom-up row order and 4-byte row padding
 - **Endianness**: BMP files use little-endian byte order (see [ENDIANNESS.md](ENDIANNESS.md))
 - **Bitwise Operations**: Essential for reading binary data correctly
+- **FileReader API**: Used to read files in the browser
 
 ### Testing Strategy
-- Run `test.js` after completing each ticket
+- Set `CURRENT_TICKET` to your current progress
+- Refresh the page to run tests
 - Use the provided sample BMP files in the `images/` directory
 - Check browser console for error messages and validation logs
 - Ensure all tests pass before moving to the next ticket
 
+### Helper Functions Available
+The starter includes a helper function to optimize canvas operations:
+```javascript
+getOptimizedCanvasContext() // Use this instead of canvas.getContext('2d')
+```
+
 ## 📝 Submission
 
-Submit your completed `index.js` with all functions implemented and passing the `test.js` checks. Ensure all tickets are completed and the BMP viewer works end-to-end.
+Submit your completed `index.js` with all functions implemented and passing the auto-running tests. Ensure all tickets are completed and the BMP viewer works end-to-end.
 
 ## 🆘 Troubleshooting
 
@@ -213,6 +209,7 @@ Submit your completed `index.js` with all functions implemented and passing the 
 - **Tests Failing**: Check that your functions match the expected signatures and return values
 - **Canvas Not Updating**: Verify your rendering functions are being called in the correct order
 - **Bitwise Operations**: Double-check your endianness handling in the readLE functions
+- **Console Errors**: Check the browser console (F12) for detailed error messages
 
 ## 📖 Additional Resources
 
@@ -230,3 +227,4 @@ By completing this challenge, you will learn:
 - Bitwise operations in JavaScript
 - BMP file format structure and parsing
 - Step-by-step debugging and testing strategies
+- Working with binary data in JavaScript

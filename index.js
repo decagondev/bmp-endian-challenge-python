@@ -3,7 +3,24 @@
 // ============================================================================
 // Change this number to run tests for completed tickets
 // 0 = no tests, 1 = test ticket 1, 2 = test tickets 1-2, etc.
-const CURRENT_TICKET = 6;
+const CURRENT_TICKET = 0;
+
+// Flag to track if a file has been loaded (for Ticket 6 testing)
+let fileLoaded = false;
+let loadedFileData = null;
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Gets an optimized canvas context for frequent read operations.
+ * This eliminates the willReadFrequently warning.
+ */
+function getOptimizedCanvasContext() {
+    const canvas = document.getElementById('canvas');
+    return canvas.getContext('2d', { willReadFrequently: true });
+}
 
 // ============================================================================
 // MAIN FUNCTIONS TO IMPLEMENT
@@ -20,11 +37,10 @@ const CURRENT_TICKET = 6;
  */
 function renderRandomColors() {
     // TODO: Implement random color rendering
-    // 1. Get the canvas element
-    // 2. Set canvas dimensions
-    // 3. Get the 2D context
-    // 4. Generate random RGB values for each pixel
-    // 5. Apply the pixel data to the canvas
+    // 1. Get the canvas element and set dimensions
+    // 2. Get the 2D context using getOptimizedCanvasContext()
+    // 3. Create ImageData and generate random RGB values for each pixel
+    // 4. Apply the pixel data to the canvas
 }
 
 /**
@@ -87,6 +103,7 @@ function loadBMPAndLogHeader(file) {
     // 4. Extract and log the data offset (bytes 10-13)
     // 5. Validate that the signature is "BM"
     // 6. Call logBMPInfoHeader if valid
+    // 7. Set fileLoaded = true and store loadedFileData for testing
 }
 
 /**
@@ -138,8 +155,8 @@ function extractRGBValues(buffer, dataOffset, width, height) {
 function renderRGBToCanvas(rgbValues, width, height) {
     // TODO: Implement RGB to canvas rendering
     // 1. Get canvas element and set dimensions
-    // 2. Get 2D context and create ImageData
-    // 3. Convert RGB values to pixel data
+    // 2. Get 2D context using getOptimizedCanvasContext()
+    // 3. Create ImageData and convert RGB values to pixel data
     // 4. Apply the pixel data to the canvas
 }
 
@@ -224,7 +241,7 @@ function runTestsForTicket(ticketNumber) {
             try {
                 // Get the canvas before calling the function
                 const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
+                const ctx = getOptimizedCanvasContext();
                 
                 // Clear the canvas first
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -383,83 +400,65 @@ function runTestsForTicket(ticketNumber) {
         console.log("");
     }
 
-    // Ticket 6: RGB Rendering to Canvas
-    if (ticketNumber >= 6) {
-        console.log("=== Testing Ticket 6: RGB Rendering to Canvas ===");
-        
-        if (typeof renderRGBToCanvas === 'function' && 
-            typeof loadBMPAndLogHeader === 'function' && 
-            typeof logBMPInfoHeader === 'function' && 
-            typeof extractRGBValues === 'function') {
-            
-            try {
-                // Test 1: Verify the complete workflow with mock data
-                console.log("Testing complete BMP parsing workflow...");
-                
-                // Create a mock file object for image-1.bmp
-                const mockFile = {
-                    name: 'image-1.bmp',
-                    type: 'image/bmp'
-                };
-                
-                // Mock FileReader to return the mock BMP data
-                const originalFileReader = window.FileReader;
-                window.FileReader = function() {
-                    this.readAsArrayBuffer = function(file) {
-                        setTimeout(() => {
-                            this.onload({ target: { result: mockBMPData.buffer } });
-                        }, 0);
-                    };
-                };
-                
-                // Get the canvas before calling the function
-                const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                // Clear the canvas first
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Test the complete workflow: load BMP -> parse -> extract RGB -> render
-                loadBMPAndLogHeader(mockFile);
-                
-                // Check if pixels were actually drawn
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-                
-                // Check if any non-zero RGB values exist (indicating the image was rendered)
-                let hasImageData = false;
-                for (let i = 0; i < data.length; i += 4) {
-                    if (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) {
-                        hasImageData = true;
-                        break;
-                    }
-                }
-                
-                // Restore original FileReader
-                window.FileReader = originalFileReader;
-                
-                if (hasImageData) {
-                    console.log("✅ RGB Rendering: PASSED (complete workflow working with mock data)");
-                    console.log("   Canvas dimensions:", canvas.width, "x", canvas.height);
-                    console.log("   💡 Manual test: Upload 'images/image-1.bmp' to verify real file loading");
-                } else {
-                    console.log("❌ RGB Rendering: FAILED - no image data detected on canvas");
-                    console.log("   Check that your functions call each other in the correct order");
-                }
-                
-            } catch (error) {
-                console.log("❌ RGB Rendering: FAILED - " + error.message);
-            }
-        } else {
-            console.log("⏭️ Ticket 6: SKIPPED (required functions not implemented)");
-            console.log("   Need: loadBMPAndLogHeader, logBMPInfoHeader, extractRGBValues, renderRGBToCanvas");
-            console.log("   💡 Complete all previous tickets first");
-        }
-        console.log("");
-    }
-
     console.log("=".repeat(50));
     console.log(`🎯 Tests complete for tickets 1-${ticketNumber}`);
-    console.log("💡 Change CURRENT_TICKET to test more tickets as you complete them!");
+    if (ticketNumber >= 6) {
+        console.log("💡 Upload a BMP file to test Ticket 6 (complete workflow)");
+    } else {
+        console.log("💡 Change CURRENT_TICKET to test more tickets as you complete them!");
+    }
+    console.log("");
+}
+
+/**
+ * Runs Ticket 6 test when a file is actually loaded by the user.
+ * This tests the complete end-to-end workflow with real file data.
+ */
+function runTicket6Test(file) {
+    console.log("=".repeat(50));
+    console.log("=== Testing Ticket 6: Complete Workflow with Real File ===");
+    
+    if (typeof renderRGBToCanvas === 'function' && 
+        typeof logBMPInfoHeader === 'function' && 
+        typeof extractRGBValues === 'function' && 
+        fileLoaded && loadedFileData) {
+        
+        try {
+            // Get the canvas
+            const canvas = document.getElementById('canvas');
+            const ctx = getOptimizedCanvasContext();
+            
+            // Check if pixels were actually drawn
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            // Check if any non-zero RGB values exist (indicating the image was rendered)
+            let hasImageData = false;
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) {
+                    hasImageData = true;
+                    break;
+                }
+            }
+            
+            if (hasImageData) {
+                console.log("✅ Ticket 6: PASSED (file successfully loaded and rendered)");
+                console.log("   File:", file.name);
+                console.log("   Canvas dimensions:", canvas.width, "x", canvas.height);
+                console.log("   🎉 Complete workflow working!");
+            } else {
+                console.log("❌ Ticket 6: FAILED - no image data detected on canvas");
+                console.log("   Check that your functions call each other in the correct order");
+            }
+            
+        } catch (error) {
+            console.log("❌ Ticket 6: FAILED - " + error.message);
+        }
+    } else {
+        console.log("⏭️ Ticket 6: SKIPPED (required functions not implemented or no file loaded)");
+        console.log("   Need: logBMPInfoHeader, extractRGBValues, renderRGBToCanvas");
+    }
+    
+    console.log("=".repeat(50));
     console.log("");
 }
