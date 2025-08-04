@@ -1,7 +1,7 @@
 # Ticket 2: Implement readLE Functions
 
 ## Description
-This ticket requires you to implement the `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions to parse little-endian integers from a `Uint8Array` buffer using bitwise operations. These functions are vital for reading the BMP file’s header data, which uses little-endian byte order. You’ll combine bytes to form integers, handling both unsigned and signed values.
+This ticket requires you to implement the `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions to parse little-endian integers from a `Uint8Array` buffer using bitwise operations. These functions are vital for reading the BMP file's header data, which uses little-endian byte order. You'll combine bytes to form integers, handling both unsigned and signed values.
 
 ## Acceptance Criteria
 - `readUInt32LE` must correctly parse a 32-bit unsigned integer and pass the test case `0x12345678`.
@@ -23,5 +23,6 @@ This ticket requires you to implement the `readUInt32LE`, `readInt32LE`, and `re
 - Test with the provided test buffer in `test.js`.
 
 ## Testing
-- Run `test.js` in the browser console or a Node.js environment.
-- Verify that all three tests log "PASSED" with the expected values.
+- **Auto-testing**: Change `CURRENT_TICKET` to `2` at the top of `index.js` to enable automatic testing.
+- Check the browser console for test results - you should see "✅ readUInt32LE: PASSED", "✅ readInt32LE: PASSED", and "✅ readUInt16LE: PASSED" when your implementation is correct.
+- The tests verify that your functions correctly handle little-endian byte order and return the expected values.

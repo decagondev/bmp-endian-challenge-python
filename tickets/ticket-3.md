@@ -21,6 +21,7 @@ This ticket involves implementing the `loadBMPAndLogHeader` function to load a B
 - Include a check for valid file format and log an error if invalid.
 
 ## Testing
-- Serve `index.html` locally and select a valid 24-bit BMP file.
-- Check the console for the signature and a data offset value.
-- Try a non-BMP file to verify the error message.
+- **Auto-testing**: Change `CURRENT_TICKET` to `3` at the top of `index.js` to enable automatic testing.
+- Check the browser console for test results - you should see "✅ BMP Signature: PASSED" and "✅ Data Offset: PASSED" when your implementation is correct.
+- The tests verify that your functions can correctly parse BMP header data using mock data.
+- For manual testing: Serve `index.html` locally and select a valid 24-bit BMP file to see the signature and data offset logged to the console.

@@ -1,7 +1,7 @@
 # Ticket 1: Implement Render Random Colors
 
 ## Description
-This ticket tasks you with implementing the `renderRandomColors` function to fill the canvas with random RGB colors when the page loads. The goal is to create a dynamic visual starting point for the BMP Viewer, allowing users to see a colorful display before uploading a file. You’ll use the Canvas API to generate random color values and apply them to the canvas, helping you explore basic rendering techniques.
+This ticket tasks you with implementing the `renderRandomColors` function to fill the canvas with random RGB colors when the page loads. The goal is to create a dynamic visual starting point for the BMP Viewer, allowing users to see a colorful display before uploading a file. You'll use the Canvas API to generate random color values and apply them to the canvas, helping you explore basic rendering techniques.
 
 ## Acceptance Criteria
 - The canvas should display a pattern or solid color composed of random RGB values when the page loads.
@@ -24,3 +24,5 @@ This ticket tasks you with implementing the `renderRandomColors` function to fil
 ## Testing
 - Open `index.html` in a browser after serving it locally.
 - Verify that the canvas displays random colors immediately upon loading, without needing a file.
+- **Auto-testing**: Change `CURRENT_TICKET` to `1` at the top of `index.js` to enable automatic testing.
+- Check the browser console for test results - you should see "✅ Ticket 1: PASSED" when your implementation is correct.
