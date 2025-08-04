@@ -2,67 +2,191 @@
 
 Welcome to the BMP Parser Starter Project! This project provides a skeleton for parsing and rendering BMP image files in the browser using vanilla JavaScript and the Canvas API. Your task is to implement the logic for various functionalities as outlined in the tickets below. The project uses Tailwind CSS for styling and includes a basic HTML structure with a file input and canvas.
 
-## Getting Started
+## 📚 Documentation & Resources
 
-1. **Clone the Repository**: Set up the project locally.
-2. **Install a Local Server**: Use a tool like Python (`python -m http.server 8000`) to serve the files.
-3. **Open in Browser**: Navigate to `http://localhost:8000` and open `index.html`.
-4. **Test Your Code**: Use the provided `test.js` to verify the `readLE` functions.
+- **[BMP File Structure Guide](BMP-STRUCTURE.md)** - Complete breakdown of BMP file format, headers, and data organization
+- **[Endianness Guide](ENDIANNESS.md)** - Understanding big vs little endian for binary data parsing
+- **[JavaScript References](REFERENCES.md)** - Official documentation links for Canvas API, FileReader, and other key functions
+- **[Development Tickets](tickets/)** - Detailed implementation requirements for each feature
 
-## Project Structure
-- `index.html`: The HTML template with file input and canvas.
-- `index.js`: JavaScript file with placeholders for your implementations.
-- `test.js`: Test file to validate `readLE` functions.
+## 🚀 Getting Started
 
-## Tickets to Complete
+### Prerequisites
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- A local web server (to avoid CORS issues with file loading)
 
-### Ticket 1: Implement Render Random Colors
-- **Description**: Create a `renderRandomColors` function to fill the canvas with random RGB colors when the page loads. Use the Canvas API to generate a pattern or solid color with random values (0-255 for R, G, B).
-- **Acceptance Criteria**: The canvas should display random colors on page load without requiring a file upload.
-- **File**: `index.js`
-- **Placeholder**: Look for the `renderRandomColors` function.
+### Setup Instructions
 
-### Ticket 2: Implement readLE Functions
-- **Description**: Implement `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions to parse little-endian integers from a `Uint8Array` buffer using bitwise operations. These functions are critical for reading BMP header data.
-- **Acceptance Criteria**: Pass the tests in `test.js`, which checks against sample byte sequences (e.g., 0x12345678, 0xFF800000, 0xABCD).
-- **File**: `index.js`
-- **Placeholder**: Look for the `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions.
-- **Testing**: Run `test.js` in the console or a test environment.
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd bmp-endian-challenge
+   ```
 
-### Ticket 3: Implement BMP Loading and BITMAPFILEHEADER Logging
-- **Description**: Create a `loadBMPAndLogHeader` function to read a BMP file using `FileReader`, parse the BITMAPFILEHEADER (offset 0–13), and log its fields (e.g., DataOffset at offset 10) to the console.
-- **Acceptance Criteria**: Console logs the DataOffset and verifies the signature is "BM" for valid BMP files.
-- **File**: `index.js`
-- **Placeholder**: Look for the `loadBMPAndLogHeader` function.
-- **Trigger**: Called when a file is selected in the event listener.
+2. **Start a Local Server**
+   
+   **Option A: Using Python (Recommended)**
+   ```bash
+   # Python 3
+   python -m http.server 8000
+   
+   # Python 2
+   python -m SimpleHTTPServer 8000
+   ```
+   
+   **Option B: Using Node.js**
+   ```bash
+   # Install a simple HTTP server globally
+   npm install -g http-server
+   
+   # Start the server
+   http-server -p 8000
+   ```
+   
+   **Option C: Using PHP**
+   ```bash
+   php -S localhost:8000
+   ```
 
-### Ticket 4: Implement BITMAPINFOHEADER Logging
-- **Description**: Create a `logBMPInfoHeader` function to parse the BITMAPINFOHEADER (offset 14–53) from the BMP buffer and log its fields (e.g., Width at 18, Height at 22, BitCount at 28) to the console.
-- **Acceptance Criteria**: Console logs Width, Height, and BitCount, ensuring they match a valid 24-bit BMP.
-- **File**: `index.js`
-- **Placeholder**: Look for the `logBMPInfoHeader` function.
-- **Trigger**: Called after `loadBMPAndLogHeader`.
+3. **Open in Browser**
+   - Navigate to `http://localhost:8000`
+   - Open `index.html` in your browser
+   - Open the browser's Developer Tools (F12) to view console output
 
-### Ticket 5: Implement RGB Values Extraction
-- **Description**: Create an `extractRGBValues` function to extract RGB values from the BMP pixel data as an array of `[R, G, B]` triplets, starting at the data offset.
-- **Acceptance Criteria**: Returns an array of RGB values based on width, height, and row padding (4-byte alignment).
-- **File**: `index.js`
-- **Placeholder**: Look for the `extractRGBValues` function.
-- **Parameters**: `buffer`, `dataOffset`, `width`, `height`.
+4. **Test Your Implementation**
+   - Use the provided `test.js` to validate your `readLE` functions
+   - Check the console for test results and debugging information
 
-### Ticket 6: Implement RGB Rendering to Canvas
-- **Description**: Create a `renderRGBToCanvas` function to render the RGB array onto the canvas using the Canvas API.
-- **Acceptance Criteria**: The canvas displays the image based on the RGB array, matching the BMP file’s pixel data.
-- **File**: `index.js`
-- **Placeholder**: Look for the `renderRGBToCanvas` function.
-- **Parameters**: `rgbValues`, `width`, `height`.
-- **Trigger**: Called after extracting RGB values.
+## 📁 Project Structure
 
-## Development Notes
-- Use the Canvas API (`createImageData`, `putImageData`) for rendering.
-- Handle BMP’s bottom-up row order (if height > 0) and 4-byte row padding.
-- Test with 24-bit uncompressed BMP files.
-- Errors can be logged to the console for debugging.
+```
+bmp-endian-challenge/
+├── index.html          # Main HTML template with file input and canvas
+├── index.js            # JavaScript file with placeholders for implementations
+├── test.js             # Test suite for readLE functions
+├── README.md           # This file - project overview and setup
+├── BMP-STRUCTURE.md    # Detailed BMP file format documentation
+├── ENDIANNESS.md       # Endianness explanation and examples
+├── REFERENCES.md       # JavaScript API documentation links
+└── tickets/            # Individual implementation tickets
+    ├── ticket-1.md     # Render Random Colors
+    ├── ticket-2.md     # Implement readLE Functions
+    ├── ticket-3.md     # BMP Loading and Header Logging
+    ├── ticket-4.md     # Info Header Logging
+    ├── ticket-5.md     # RGB Values Extraction
+    └── ticket-6.md     # RGB Rendering to Canvas
+```
 
-## Submission
-Submit your completed `index.js` with all functions implemented and passing the `test.js` checks.
+## 🧪 Testing Your Code
+
+### Running the Test Suite
+
+The `test.js` file contains automated tests for the `readLE` functions (Ticket 2). To run the tests:
+
+1. **In Browser Console:**
+   - Open `index.html` in your browser
+   - Open Developer Tools (F12)
+   - Go to the Console tab
+   - Copy and paste the contents of `test.js` into the console
+   - Press Enter to run the tests
+
+2. **Expected Test Output:**
+   ```
+   Running tests for readLE functions...
+   readUInt32LE test: PASSED
+   readInt32LE test: PASSED
+   readUInt16LE test: PASSED
+   Tests complete.
+   ```
+
+### Manual Testing Checklist
+
+Based on the tickets, here's what you should test:
+
+#### Ticket 1: Render Random Colors ✅
+- [ ] Canvas displays random colors immediately when page loads
+- [ ] Colors change on each page refresh
+- [ ] No file upload required to see colors
+
+#### Ticket 2: readLE Functions ✅
+- [ ] All three tests in `test.js` pass
+- [ ] `readUInt32LE` correctly reads `0x12345678`
+- [ ] `readInt32LE` correctly reads `0xFF800000` as signed
+- [ ] `readUInt16LE` correctly reads `0xABCD`
+
+#### Ticket 3: BMP Loading and Header Logging ✅
+- [ ] Console logs "BM" signature when valid BMP is uploaded
+- [ ] Console logs DataOffset value (typically 54 for 24-bit BMPs)
+- [ ] Console shows error for non-BMP files
+
+#### Ticket 4: Info Header Logging ✅
+- [ ] Console logs Width, Height, and BitCount values
+- [ ] BitCount shows 24 for 24-bit BMPs
+- [ ] Warning appears for non-24-bit BMPs
+
+#### Ticket 5: RGB Values Extraction ✅
+- [ ] Function returns array of RGB triplets
+- [ ] Array length matches image dimensions (width × height)
+- [ ] RGB values are correctly extracted from pixel data
+
+#### Ticket 6: RGB Rendering to Canvas ✅
+- [ ] Canvas displays the uploaded BMP image correctly
+- [ ] Image colors match the original file
+- [ ] Canvas dimensions match the image dimensions
+
+## 🎯 Tickets to Complete
+
+### [Ticket 1: Implement Render Random Colors](tickets/ticket-1.md)
+- **Description**: Create a `renderRandomColors` function to fill the canvas with random RGB colors when the page loads.
+- **Acceptance Criteria**: Canvas displays random colors on page load without requiring file upload.
+- **File**: `index.js` - Look for the `renderRandomColors` function.
+
+### [Ticket 2: Implement readLE Functions](tickets/ticket-2.md)
+- **Description**: Implement `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions for parsing little-endian integers.
+- **Acceptance Criteria**: Pass all tests in `test.js`.
+- **File**: `index.js` - Look for the `readUInt32LE`, `readInt32LE`, and `readUInt16LE` functions.
+
+### [Ticket 3: Implement BMP Loading and BITMAPFILEHEADER Logging](tickets/ticket-3.md)
+- **Description**: Create `loadBMPAndLogHeader` function to read BMP files and parse the BITMAPFILEHEADER.
+- **Acceptance Criteria**: Console logs DataOffset and verifies "BM" signature.
+- **File**: `index.js` - Look for the `loadBMPAndLogHeader` function.
+
+### [Ticket 4: Implement BITMAPINFOHEADER Logging](tickets/ticket-4.md)
+- **Description**: Create `logBMPInfoHeader` function to parse BITMAPINFOHEADER and log key fields.
+- **Acceptance Criteria**: Console logs Width, Height, and BitCount for valid 24-bit BMPs.
+- **File**: `index.js` - Look for the `logBMPInfoHeader` function.
+
+### [Ticket 5: Implement RGB Values Extraction](tickets/ticket-5.md)
+- **Description**: Create `extractRGBValues` function to extract RGB values from BMP pixel data.
+- **Acceptance Criteria**: Returns array of RGB triplets based on width, height, and row padding.
+- **File**: `index.js` - Look for the `extractRGBValues` function.
+
+### [Ticket 6: Implement RGB Rendering to Canvas](tickets/ticket-6.md)
+- **Description**: Create `renderRGBToCanvas` function to render RGB array onto canvas.
+- **Acceptance Criteria**: Canvas displays image matching the BMP file's pixel data.
+- **File**: `index.js` - Look for the `renderRGBToCanvas` function.
+
+## 🔧 Development Notes
+
+- **Canvas API**: Use `createImageData` and `putImageData` for rendering
+- **BMP Format**: Handle bottom-up row order and 4-byte row padding
+- **Testing**: Use 24-bit uncompressed BMP files for best compatibility
+- **Debugging**: Check browser console for error messages and validation logs
+- **Endianness**: BMP files use little-endian byte order (see [ENDIANNESS.md](ENDIANNESS.md))
+
+## 📝 Submission
+
+Submit your completed `index.js` with all functions implemented and passing the `test.js` checks. Ensure all tickets are completed and the BMP viewer works end-to-end.
+
+## 🆘 Troubleshooting
+
+- **CORS Errors**: Make sure you're serving files through a local web server, not opening `index.html` directly
+- **File Not Loading**: Ensure you're using a valid 24-bit BMP file
+- **Tests Failing**: Check that your `readLE` functions use bitwise operations correctly
+- **Canvas Not Updating**: Verify your rendering functions are being called in the correct order
+
+## 📖 Additional Resources
+
+- [MDN Canvas API Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+- [MDN FileReader API](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
+- [BMP File Format Specification](https://en.wikipedia.org/wiki/BMP_file_format)
