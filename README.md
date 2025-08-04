@@ -25,27 +25,13 @@ Welcome to the BMP Parser Starter Project! This project provides a skeleton for 
 
 2. **Start a Local Server**
    
-   **Option A: Using Python (Recommended)**
-   ```bash
-   # Python 3
-   python -m http.server 8000
-   
-   # Python 2
-   python -m SimpleHTTPServer 8000
-   ```
-   
-   **Option B: Using Node.js**
+   **Using Node.js**
    ```bash
    # Install a simple HTTP server globally
    npm install -g http-server
    
    # Start the server
    http-server -p 8000
-   ```
-   
-   **Option C: Using PHP**
-   ```bash
-   php -S localhost:8000
    ```
 
 3. **Open in Browser**
